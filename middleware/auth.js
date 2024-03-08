@@ -29,7 +29,7 @@ const accessroles = {
  const orgSearchByID = (id) => {
    return new Promise((resolve, reject) => {
      db.query(
-       'SELECT * FROM admins WHERE id = ?',
+       'SELECT * FROM organizations WHERE id = ?',
        [id],
        (err, results) => {
          if (err) {
@@ -45,7 +45,7 @@ const accessroles = {
  const empSearchByID = (id) => {
    return new Promise((resolve, reject) => {
      db.query(
-       'SELECT * FROM admins WHERE id = ?',
+       'SELECT * FROM employees WHERE id = ?',
        [id],
        (err, results) => {
          if (err) {
@@ -71,17 +71,17 @@ const auth = (accessroles) => {
          let verifiedkey = await jwt.verify(token, process.env.verifyTokenKey);
          
          if(verifiedkey){
-            console.log(verifiedkey, accessroles)
+            // console.log(verifiedkey, accessroles)
             if(accessroles.includes(verifiedkey.role)){
                if(verifiedkey.role == "admin"){
                   const adminResults = await adminSearchByID(verifiedkey.id);
-                  console.log(adminResults);
+                  // console.log(adminResults);
                   const admin = adminResults[0]
                   if(admin){
                      req.adminid = admin.id;
                      next()
                   }else{
-                     console.log("hello admin");
+                     // console.log("hello admin");
                      res.status(404).json({message: "No valid ID in sent token."});
                   }
                }else if(verifiedkey.role == "organization"){

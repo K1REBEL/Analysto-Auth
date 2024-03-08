@@ -1,7 +1,8 @@
 require("dotenv").config();
 
-const { adminSave, signIn } = require('./auth.controller');
-const { newOrg } = require('./org.controller');
+const { adminSave, signIn } = require('./controllers/auth.controller');
+const { newOrg, setOrgPass } = require('./controllers/org.controller');
+
 const userAPI = require("./userRoles");
 const {auth} = require("../middleware/auth");
 
@@ -15,6 +16,7 @@ router.get("/signUp", (req, res)=> res.send("Auth Router!"));
 router.post("/saveadmin", adminSave);
 router.get("/signIn", /*validationFun(authValidation.signIn),*/ signIn);
 router.post("/addorg", auth(userAPI.addOrg), newOrg);
+router.patch("/setOrgPass", auth(userAPI.setOrgPass), setOrgPass);
 
 // router.post("/signUp",validationFun(authValidation.signUp),signUp);
 // router.post("/signUpMobile",validationFun(authValidation.signUpMobile),signUpMobile);
