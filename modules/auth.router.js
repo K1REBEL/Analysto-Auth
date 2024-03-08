@@ -1,6 +1,10 @@
 require("dotenv").config();
 
 const { adminSave, signIn } = require('./auth.controller');
+const { newOrg } = require('./org.controller');
+const userAPI = require("./userRoles");
+const {auth} = require("../middleware/auth");
+
 const router = require('express').Router();
 
 // const authValidation = require("./auth.validator");
@@ -8,8 +12,9 @@ const validationFun = require('../middleware/validation');
 
 
 router.get("/signUp", (req, res)=> res.send("Auth Router!"));
-router.get("/saveadmin", adminSave);
+router.post("/saveadmin", adminSave);
 router.get("/signIn", /*validationFun(authValidation.signIn),*/ signIn);
+router.post("/addorg", auth(userAPI.addOrg), newOrg);
 
 // router.post("/signUp",validationFun(authValidation.signUp),signUp);
 // router.post("/signUpMobile",validationFun(authValidation.signUpMobile),signUpMobile);

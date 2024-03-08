@@ -8,19 +8,19 @@ const db = getDatabase();
 
 const newOrg = async (req, res) => {
   try {
-    const { name, email, pass } = req.body;
+    const { name, email, pass, niche, region, phone } = req.body;
     // pass = pass.toString()
     const password = await bcrypt.hashSync(pass, parseInt(process.env.saltRounds))
     
     db.query(
-      "INSERT INTO admins (name, email, password, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())",
-      [name, email, password],
+      "INSERT INTO organizations (name, email, password, niche, region, phone, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())",
+      [name, email, password, niche, region, phone],
       (err, result) => {
         if (err) {
           console.error(err.message);
           res.status(500).json({ message: "Error inserting data" });
         } else {
-          res.json({ message: "Data inserted successfully", name, email, pass });
+          res.json({ message: "Data inserted successfully", name, email, password, niche, region, phone });
         }
       }
     );  
@@ -28,3 +28,5 @@ const newOrg = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+module.exports = { newOrg, }
