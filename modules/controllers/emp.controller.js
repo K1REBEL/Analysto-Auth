@@ -1,6 +1,6 @@
 var jwt = require("jsonwebtoken");
 const { getDatabase } = require("../../DB/connect")
-const { orgSearchByID, empSearchByID } = require("../helpers/searchers")
+const { empSearchByID } = require("../helpers/searchers")
 const bcrypt = require("bcrypt");
 // const userModel = require("../../../DB/model/user");
 // const sendEmail = require("../../../service/sendEmail");

@@ -1,6 +1,8 @@
 var jwt = require("jsonwebtoken");
 // const userModel = require("../DB/model/user");
 const { getDatabase } = require("../DB/connect")
+const { orgSearchByID, empSearchByID } = require("../modules/helpers/searchers")
+
 const db = getDatabase();
 
 const accessroles = {
@@ -25,40 +27,6 @@ const accessroles = {
      );
    });
  };
-
- const orgSearchByID = (id) => {
-   return new Promise((resolve, reject) => {
-     db.query(
-       'SELECT * FROM organizations WHERE id = ?',
-       [id],
-       (err, results) => {
-         if (err) {
-           reject(err);
-         } else {
-           resolve(results);
-         }
-       }
-     );
-   });
- };
-
- const empSearchByID = (id) => {
-   return new Promise((resolve, reject) => {
-     db.query(
-       'SELECT * FROM employees WHERE id = ?',
-       [id],
-       (err, results) => {
-         if (err) {
-           reject(err);
-         } else {
-           resolve(results);
-         }
-       }
-     );
-   });
- };
-
-
 
 const auth = (accessroles) => {
    return async (req, res, next) => {
