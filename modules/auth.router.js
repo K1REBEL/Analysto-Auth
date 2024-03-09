@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const { adminSave, signIn } = require('./controllers/auth.controller');
 const { newOrg, setOrgPass } = require('./controllers/org.controller');
+const { newEmp, setEmpPass } = require('./controllers/emp.controller');
 
 const userAPI = require("./userRoles");
 const {auth} = require("../middleware/auth");
@@ -17,6 +18,7 @@ router.post("/saveadmin", adminSave);
 router.get("/signIn", /*validationFun(authValidation.signIn),*/ signIn);
 router.post("/addorg", auth(userAPI.addOrg), newOrg);
 router.patch("/setOrgPass", auth(userAPI.setOrgPass), setOrgPass);
+router.post("/addEmp", auth(userAPI.addEmp), newEmp);
 
 // router.post("/signUp",validationFun(authValidation.signUp),signUp);
 // router.post("/signUpMobile",validationFun(authValidation.signUpMobile),signUpMobile);
