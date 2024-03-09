@@ -37,7 +37,7 @@ const auth = (accessroles) => {
          let authToken = req.headers["authorization"];
          let token = authToken.split(" ")[1]
          let verifiedkey = await jwt.verify(token, process.env.verifyTokenKey);
-         
+         console.log(verifiedkey);
          if(verifiedkey){
             // console.log(verifiedkey, accessroles)
             if(accessroles.includes(verifiedkey.role)){
