@@ -19,6 +19,7 @@ router.get("/signIn", /*validationFun(authValidation.signIn),*/ signIn);
 router.post("/addorg", auth(userAPI.addOrg), newOrg);
 router.patch("/setOrgPass", auth(userAPI.setOrgPass), setOrgPass);
 router.post("/addEmp", auth(userAPI.addEmp), newEmp);
+router.patch("/setEmpPass", auth(userAPI.setEmpPass), setEmpPass);
 
 // router.post("/signUp",validationFun(authValidation.signUp),signUp);
 // router.post("/signUpMobile",validationFun(authValidation.signUpMobile),signUpMobile);

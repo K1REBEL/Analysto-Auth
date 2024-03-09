@@ -69,9 +69,26 @@ const searchAdminsTable = (email) => {
    });
  };
 
+ const empSearchByID = (id) => {
+   return new Promise((resolve, reject) => {
+     db.query(
+       'SELECT * FROM employees WHERE id = ?',
+       [id],
+       (err, results) => {
+         if (err) {
+           reject(err);
+         } else {
+           resolve(results);
+         }
+       }
+     );
+   });
+ };
+
  module.exports = {
    searchAdminsTable,
    searchOrganizationsTable,
    orgSearchByID,
-   searchEmployeesTable
+   searchEmployeesTable,
+   empSearchByID,
  }

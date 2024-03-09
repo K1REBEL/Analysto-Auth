@@ -1,6 +1,6 @@
 var jwt = require("jsonwebtoken");
 const { getDatabase } = require("../../DB/connect")
-const { orgSearchByID } = require("../helpers/searchers")
+const { orgSearchByID, empSearchByID } = require("../helpers/searchers")
 const bcrypt = require("bcrypt");
 // const userModel = require("../../../DB/model/user");
 // const sendEmail = require("../../../service/sendEmail");
@@ -31,17 +31,14 @@ const newEmp = async (req, res) => {
 
  const setEmpPass = async (req, res) => {
    try {
-     const orgSearch = await orgSearchByID(req.orgid)
-     const organization = orgSearch[0]
+     const empSearch = await empSearchByID(req.empid)
+     const employee = empSearch[0]
      const { newPassword } = req.body;
-   //   const { email } = req.params;
-   //   const user = await userModel.findOne({ email });
-   //   console.log(organization);
-     if (!organization) {
-       res.status(404).json({ message: "Organization Not Found" });
+     if (!employee) {
+       res.status(404).json({ message: "Employee Not Found" });
      } else {
        const hashedPassword = await bcrypt.hash( newPassword, parseInt(process.env.saltRound) );
-       await updateOrganizationPassword(req.orgid, hashedPassword)
+       await updateEmployeePassword(req.empid, hashedPassword)
 
        res.status(200).json({ message: "Password reset!"/*, updatedUser*/ });
      }
@@ -50,11 +47,11 @@ const newEmp = async (req, res) => {
    }
  };
 
- const updateEmployeePassword = (orgId, newPassword) => {
+ const updateEmployeePassword = (empId, newPassword) => {
    return new Promise((resolve, reject) => {
-     const sql = 'UPDATE organizations SET password = ? WHERE id = ?';
+     const sql = 'UPDATE employees SET password = ? WHERE id = ?';
  
-     db.query(sql, [newPassword, orgId], (err, result) => {
+     db.query(sql, [newPassword, empId], (err, result) => {
        if (err) {
          reject(err);
        } else {
