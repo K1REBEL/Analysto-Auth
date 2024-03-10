@@ -5,12 +5,11 @@ const bcrypt = require("bcrypt");
 
 const db = getDatabase();
 
-const newPro = (req, res) => {
+const newPro = async (req, res) => {
   try {
     const { sku, brand, category } = req.body;
-    // const password = await bcrypt.hashSync(pass, parseInt(process.env.saltRounds))
     
-    db.query(
+    await db.query(
       "INSERT INTO products (sku, brand, category, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())",
       [sku, brand, category],
       (err, result) => {

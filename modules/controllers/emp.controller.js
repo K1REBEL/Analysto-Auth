@@ -35,6 +35,16 @@ const empIndex = async (req, res) => {
   }
 }
 
+const showUser = async (req, res){
+  try{
+    const userID = req.params.userID
+    await db.query(
+      "SELECT id , name , email , sku , brand , category FROM employees AS 'Emp' , products AS 'Pro' , tracking AS 'tra' where  ",
+      [userID]
+    )
+  }
+}
+
 const newEmp = async (req, res) => {
   try {
     const { name, email, pass } = req.body;
