@@ -35,13 +35,16 @@ const empIndex = async (req, res) => {
   }
 }
 
-const showUser = async (req, res){
+const showUser = async (req, res) => {
   try{
     const userID = req.params.userID
     await db.query(
       "SELECT id , name , email , sku , brand , category FROM employees AS 'Emp' , products AS 'Pro' , tracking AS 'tra' where  ",
       [userID]
     )
+  }
+  catch (error) {
+    res.status(400).json({ message: error.message });
   }
 }
 
