@@ -29,36 +29,45 @@ const newPro = (req, res) => {
   }
 };
 
-//  const setEmpPass = async (req, res) => {
-//    try {
-//      const empSearch = await empSearchByID(req.empid)
-//      const employee = empSearch[0]
-//      const { newPassword } = req.body;
-//      if (!employee) {
-//        res.status(404).json({ message: "Employee Not Found" });
-//      } else {
-//        const hashedPassword = await bcrypt.hash( newPassword, parseInt(process.env.saltRound) );
-//        await updateEmployeePassword(req.empid, hashedPassword)
+const addLink = async (req, res) => {
+  try {
+    const prod_id = req.params.prod_id
+    // const prod_id = productId.toString()
+    // console.log(productId, prod_id)
+    const { platform, identifier, url } = req.body
+    db.query(
+      "INSERT INTO links (prod_id, identifier, platform, url, created_at, updated_at) VALUES (?, ?, ?, ?, NOW(), NOW())",
+      [prod_id, identifier, platform, url],
+      async (err, result) => {
+        if (err) {
+          console.error(err.message);
+          res.status(500).json({ message: "Error inserting data" });
+        } else {
+          // console.log(req.empid)
+          await follow(req.empid, prod_id, result.insertId)
+          res.json({ message: "Data inserted successfully", prod_id, identifier, platform, url });
+        }
+      }
+    )
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 
-//        res.status(200).json({ message: "Password reset!"/*, updatedUser*/ });
-//      }
-//    } catch (error) {
-//      res.status(500).json({ message: error.message });
-//    }
-//  };
+const follow = (emp_id, prod_id, url_id) => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      'INSERT INTO tracking (user_id, prod_id, url_id, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())',
+      [emp_id, prod_id, url_id],
+      (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results);
+        }
+      }
+    );
+  });
+};
 
-//  const updateEmployeePassword = (empId, newPassword) => {
-//    return new Promise((resolve, reject) => {
-//      const sql = 'UPDATE employees SET password = ? WHERE id = ?';
- 
-//      db.query(sql, [newPassword, empId], (err, result) => {
-//        if (err) {
-//          reject(err);
-//        } else {
-//          resolve(result);
-//        }
-//      });
-//    });
-//  };
-
-module.exports = { newPro }
+module.exports = { newPro, addLink }

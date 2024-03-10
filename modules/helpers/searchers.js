@@ -18,6 +18,22 @@ const searchAdminsTable = (email) => {
      );
    });
  };
+
+ const adminSearchByID = (id) => {
+   return new Promise((resolve, reject) => {
+     db.query(
+       'SELECT * FROM admins WHERE id = ?',
+       [id],
+       (err, results) => {
+         if (err) {
+           reject(err);
+         } else {
+           resolve(results);
+         }
+       }
+     );
+   });
+ };
  
  const searchOrganizationsTable = (email) => {
    return new Promise((resolve, reject) => {
@@ -103,6 +119,7 @@ const searchAdminsTable = (email) => {
 
  module.exports = {
    searchAdminsTable,
+   adminSearchByID,
    searchOrganizationsTable,
    orgSearchByID,
    searchEmployeesTable,

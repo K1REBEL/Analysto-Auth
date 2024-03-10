@@ -1,7 +1,7 @@
 var jwt = require("jsonwebtoken");
 // const userModel = require("../DB/model/user");
 const { getDatabase } = require("../DB/connect")
-const { orgSearchByID, empSearchByID } = require("../modules/helpers/searchers")
+const { adminSearchByID, orgSearchByID, empSearchByID } = require("../modules/helpers/searchers")
 
 const db = getDatabase();
 
@@ -10,23 +10,6 @@ const accessroles = {
    org: "organization",
    emp: "employee"
 }
-
-
- const adminSearchByID = (id) => {
-   return new Promise((resolve, reject) => {
-     db.query(
-       'SELECT * FROM admins WHERE id = ?',
-       [id],
-       (err, results) => {
-         if (err) {
-           reject(err);
-         } else {
-           resolve(results);
-         }
-       }
-     );
-   });
- };
 
 const auth = (accessroles) => {
    return async (req, res, next) => {
@@ -37,7 +20,7 @@ const auth = (accessroles) => {
          let authToken = req.headers["authorization"];
          let token = authToken.split(" ")[1]
          let verifiedkey = await jwt.verify(token, process.env.verifyTokenKey);
-         console.log(verifiedkey);
+         // console.log(verifiedkey);
          if(verifiedkey){
             // console.log(verifiedkey, accessroles)
             if(accessroles.includes(verifiedkey.role)){

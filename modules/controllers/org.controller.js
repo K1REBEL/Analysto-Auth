@@ -34,9 +34,6 @@ const newOrg = async (req, res) => {
      const orgSearch = await orgSearchByID(req.orgid)
      const organization = orgSearch[0]
      const { newPassword } = req.body;
-   //   const { email } = req.params;
-   //   const user = await userModel.findOne({ email });
-   //   console.log(organization);
      if (!organization) {
        res.status(404).json({ message: "Organization Not Found" });
      } else {
