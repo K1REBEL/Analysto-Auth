@@ -39,8 +39,17 @@ const showUser = async (req, res) => {
   try{
     const userID = req.params.userID
     await db.query(
-      "SELECT id , name , email , sku , brand , category FROM employees AS 'Emp' , products AS 'Pro' , tracking AS 'tra' where  ",
-      [userID]
+      "SELECT id , name , email , sku , brand , category FROM employees AS Emp , products AS Pro , tracking AS Tra where Emp.id = ? and Emp.id = Tra.user_id and Pro.id = Tra.prod_id",
+      [userID],
+      (err, result) => {
+        if (err) {
+          console.error(err.message);
+          res.status(500).json({ message: "Error retrieving data" });
+        } else {
+          // console.log(result);
+          res.json({ message: "Organization's Employee Retrieved", result });
+        }
+      }
     )
   }
   catch (error) {
@@ -102,4 +111,4 @@ const newEmp = async (req, res) => {
    });
  };
 
-module.exports = { empIndex, newEmp, setEmpPass }
+module.exports = { empIndex, showUser ,newEmp, setEmpPass }
