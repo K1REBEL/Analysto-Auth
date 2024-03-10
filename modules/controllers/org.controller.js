@@ -7,6 +7,27 @@ const bcrypt = require("bcrypt");
 
 const db = getDatabase();
 
+const orgIndex = async (req, res) => {
+  try {
+    db.query(
+      "SELECT name, email AS 'Head Email', niche, region, phone FROM organizations",
+      // "SELECT name, email AS [Head Email], niche, region, phone FROM organizations",
+      [],
+      (err, result) => {
+        if (err) {
+          console.error(err.message);
+          res.status(500).json({ message: "Error retrieving data" });
+        } else {
+          console.log(result);
+          res.json({ message: "Organizations Retrieved", result });
+        }
+      }
+    )
+  } catch (error) {
+    
+  }
+}
+
 const newOrg = async (req, res) => {
   try {
     const { name, email, pass, niche, region, phone } = req.body;
@@ -61,4 +82,4 @@ const newOrg = async (req, res) => {
    });
  };
 
-module.exports = { newOrg, setOrgPass }
+module.exports = { orgIndex, newOrg, setOrgPass }
