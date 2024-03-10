@@ -9,7 +9,7 @@ const db = getDatabase();
 
 const orgIndex = async (req, res) => {
   try {
-    db.query(
+     await db.query(
       "SELECT name, email AS 'Head Email', niche, region, phone FROM organizations",
       // "SELECT name, email AS [Head Email], niche, region, phone FROM organizations",
       [],
@@ -18,7 +18,7 @@ const orgIndex = async (req, res) => {
           console.error(err.message);
           res.status(500).json({ message: "Error retrieving data" });
         } else {
-          console.log(result);
+          // console.log(result);
           res.json({ message: "Organizations Retrieved", result });
         }
       }
@@ -82,4 +82,26 @@ const newOrg = async (req, res) => {
    });
  };
 
-module.exports = { orgIndex, newOrg, setOrgPass }
+ const getOrg = async (req, res) => {
+  const orgID = req.params.orgID
+  await db.query(
+    "SELECT name, email AS 'Head Email', niche, region, phone FROM organizations WHERE id = ?",
+    // "SELECT name, email AS [Head Email], niche, region, phone FROM organizations",
+    [orgID],
+    (err, result) => {
+      if (err) {
+        console.error(err.message);
+        res.status(500).json({ message: "Error retrieving data" });
+      } else {
+        console.log(result);
+        res.json({ message: "Organization Retrieved", result });
+      }
+    }
+  )
+ }
+
+ const softDelOrg = async (req, res) => {
+  
+ }
+
+module.exports = { orgIndex, newOrg, setOrgPass, getOrg }

@@ -38,6 +38,7 @@ const auth = (accessroles) => {
                }else if(verifiedkey.role == "organization"){
                   const orgResults = await orgSearchByID(verifiedkey.id);
                   const org = orgResults[0]
+                  console.log("hello organization", org);
                   if(org){
                      req.orgid = org.id;  
                      next()

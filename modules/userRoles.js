@@ -3,7 +3,10 @@ const { accessroles } = require("../middleware/auth");
 const userAPI = {
    addOrg: [accessroles.admin],
    orgIndex: [accessroles.admin],
+   getOrg: [accessroles.admin],
    setOrgPass: [accessroles.admin, accessroles.org],
+   adminEmpIndex: [accessroles.admin],
+   orgEmpIndex: [accessroles.org],
    addEmp: [accessroles.org],
    setEmpPass: [accessroles.org, accessroles.emp],
    addPro: [accessroles.emp],

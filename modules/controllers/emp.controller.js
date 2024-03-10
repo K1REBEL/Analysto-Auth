@@ -7,6 +7,34 @@ const bcrypt = require("bcrypt");
 
 const db = getDatabase();
 
+const empIndex = async (req, res) => {
+  try {
+    var orgID
+    if(req.adminid){
+      orgID = req.params.orgID
+      console.log(orgID);
+    }else if(req.orgid){
+      orgID = req.orgid
+      console.log(orgID);
+    }
+     await db.query(
+      "SELECT id, name, email FROM employees WHERE org_id = ?",
+      [orgID],
+      (err, result) => {
+        if (err) {
+          console.error(err.message);
+          res.status(500).json({ message: "Error retrieving data" });
+        } else {
+          // console.log(result);
+          res.json({ message: "Organization's Employees Retrieved", result });
+        }
+      }
+    )
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}
+
 const newEmp = async (req, res) => {
   try {
     const { name, email, pass } = req.body;
@@ -61,4 +89,4 @@ const newEmp = async (req, res) => {
    });
  };
 
-module.exports = { newEmp, setEmpPass }
+module.exports = { empIndex, newEmp, setEmpPass }
