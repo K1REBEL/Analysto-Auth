@@ -35,11 +35,11 @@ const empIndex = async (req, res) => {
   }
 }
 
-const showUser = async (req, res) => {
+const getEmp = async (req, res) => {
   try{
     const userID = req.params.userID
     await db.query(
-      "SELECT id , name , email , sku , brand , category FROM employees AS Emp , products AS Pro , tracking AS Tra where Emp.id = ? and Emp.id = Tra.user_id and Pro.id = Tra.prod_id",
+      "SELECT Emp.id, Emp.name, Emp.email, Pro.sku, Pro.brand, Pro.category FROM employees AS Emp JOIN tracking AS Tra ON Emp.id = Tra.user_id JOIN products AS Pro ON Pro.id = Tra.prod_id WHERE Emp.id = ?",
       [userID],
       (err, result) => {
         if (err) {
@@ -111,4 +111,4 @@ const newEmp = async (req, res) => {
    });
  };
 
-module.exports = { empIndex, showUser ,newEmp, setEmpPass }
+module.exports = { empIndex, getEmp ,newEmp, setEmpPass }
