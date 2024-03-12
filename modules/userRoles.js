@@ -4,6 +4,7 @@ const userAPI = {
    addOrg: [accessroles.admin],
    orgIndex: [accessroles.admin],
    getOrg: [accessroles.admin],
+   deleteOrg: [accessroles.admin],
    setOrgPass: [accessroles.admin, accessroles.org],
    adminEmpIndex: [accessroles.admin],
    getEmp:[accessroles.org],

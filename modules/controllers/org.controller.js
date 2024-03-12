@@ -101,7 +101,20 @@ const newOrg = async (req, res) => {
  }
 
  const softDelOrg = async (req, res) => {
-  
+  const orgID = req.params.orgID;
+  await db.query(
+    "UPDATE organizations SET is_active = 0 where id = ?",
+    [orgID],
+    (err, result) => {
+      if (err) {
+        console.error(err.message);
+        res.status(500).json({ message: "Error deleting data" });
+      } else {
+        // console.log(result);
+        res.json({ message: "Organization deactivated", result });
+      }
+    }
+  )
  }
 
-module.exports = { orgIndex, newOrg, setOrgPass, getOrg }
+module.exports = { orgIndex, newOrg, setOrgPass, getOrg , softDelOrg}
