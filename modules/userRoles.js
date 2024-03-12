@@ -10,6 +10,7 @@ const userAPI = {
    getEmp:[accessroles.org],
    orgEmpIndex: [accessroles.org],
    addEmp: [accessroles.org],
+   delEmp: [accessroles.org],
    setEmpPass: [accessroles.org, accessroles.emp],
    addPro: [accessroles.emp],
    addLink: [accessroles.emp],

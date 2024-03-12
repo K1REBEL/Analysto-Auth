@@ -108,7 +108,7 @@ const newOrg = async (req, res) => {
     (err, result) => {
       if (err) {
         console.error(err.message);
-        res.status(500).json({ message: "Error deleting data" });
+        res.status(500).json({ message: "Error deleting Org" });
       } else {
         // console.log(result);
         res.json({ message: "Organization deactivated", result });
@@ -117,4 +117,21 @@ const newOrg = async (req, res) => {
   )
  }
 
-module.exports = { orgIndex, newOrg, setOrgPass, getOrg , softDelOrg}
+ const delEmp = async (req, res) => {
+  const userID = req.params.userID;
+  await db.query(
+    "DELETE FROM employees where id = ?",
+    [userID],
+    (err, result) => {
+      if (err) {
+        console.error(err.message);
+        res.status(500).json({ message: "Error deleting Employee" });
+      } else {
+        console.log(result);
+        res.json({ message: "Employee Deleted", result });
+      }
+    }
+  )
+ }
+
+module.exports = { orgIndex, newOrg, setOrgPass, getOrg , softDelOrg , delEmp}

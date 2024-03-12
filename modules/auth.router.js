@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const { adminSave, signIn } = require('./controllers/auth.controller');
-const { orgIndex, newOrg, setOrgPass, getOrg , softDelOrg } = require('./controllers/org.controller');
+const { orgIndex, newOrg, setOrgPass, getOrg , softDelOrg , delEmp} = require('./controllers/org.controller');
 const { empIndex, newEmp, setEmpPass, getEmp} = require('./controllers/emp.controller');
 const { newPro, addLink } = require('./controllers/product.controller');
 
@@ -24,6 +24,7 @@ router.get("/org/:orgID/empIndex", auth(userAPI.adminEmpIndex), empIndex); //
 router.get("/org/emp/:userID", auth(userAPI.getEmp), getEmp);
 router.get("/org/:orgID", auth(userAPI.getOrg), getOrg);
 router.patch("/org/:orgID", auth(userAPI.deleteOrg), softDelOrg);
+router.delete("/org/emp/:userID", auth(userAPI.delEmp), delEmp);
 router.patch("/org/setOrgPass", auth(userAPI.setOrgPass), setOrgPass);
 router.post("/emp/addEmp", auth(userAPI.addEmp), newEmp);
 router.patch("/emp/setEmpPass", auth(userAPI.setEmpPass), setEmpPass);
