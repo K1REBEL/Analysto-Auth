@@ -121,6 +121,27 @@ const newOrg = async (req, res) => {
   )
  }
 
+ const restoreOrg = async (req, res) => {
+  const orgID = req.params.orgID;
+  await db.query(
+    "UPDATE organizations SET is_active = 1 where id = ?",
+    [orgID],
+    async (err, result) => {
+      if (err) {
+        console.error(err.message);
+        res.status(500).json({ message: "Error deleting Org" });
+      } else {
+        // console.log(result);
+        await db.query( 
+          "UPDATE tracking SET frozen = 0 where user_id IN ( SELECT id FROM employees WHERE org_id = ? )", 
+          [orgID] 
+        )
+        res.json({ message: "Organization Restored", result });
+      }
+    }
+  )
+ }
+
  const delEmp = async (req, res) => {
   const userID = req.params.userID;
   await db.query(
@@ -138,4 +159,4 @@ const newOrg = async (req, res) => {
   )
  }
 
-module.exports = { orgIndex, newOrg, setOrgPass, getOrg , softDelOrg , delEmp}
+module.exports = { orgIndex, newOrg, setOrgPass, getOrg , softDelOrg, restoreOrg, delEmp }
