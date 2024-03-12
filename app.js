@@ -10,7 +10,7 @@ const port = 4000;
 
 app.get("/", (req, res) => res.send("Hello Analysto!"));
 
-const authRouter = require("./modules/auth.router");
-app.use("/auth", authRouter);
+const apiRouter = require("./modules/auth.router");
+app.use("/api", apiRouter);
 
 app.listen(port, "0.0.0.0", () => console.log("Server is running on port " + port));
