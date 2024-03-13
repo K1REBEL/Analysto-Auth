@@ -66,4 +66,24 @@ const getRequests = async (req, res) => {
    }
 }
 
- module.exports = { adminSave , getRequests , sendRequest }
+const rejectRequest = async (req, res) => {
+  const {org_name} = req.body;
+    try {
+    await db.query(
+      "UPDATE requests SET status = 'rejected' where org_name =?",
+      [org_name],
+      (err, result) => {
+        if (err) {
+          console.error(err.message);
+          res.status(500).json({ message: "Error reject" });
+        } else {
+          res.json({ message: "Request rejected successfully", result});
+        }
+      }
+    );
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}
+
+ module.exports = { adminSave , getRequests , sendRequest , rejectRequest}
