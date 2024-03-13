@@ -41,6 +41,10 @@ const newOrg = async (req, res) => {
           console.error(err.message);
           res.status(500).json({ message: "Error inserting data" });
         } else {
+          db.query(
+            "UPDATE requests set status = 'accepted' where org_name = ?",
+            [name]
+          );
           res.json({ message: "Data inserted successfully", name, email, password, niche, region, phone });
         }
       }
