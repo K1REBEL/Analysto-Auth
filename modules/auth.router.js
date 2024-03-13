@@ -1,14 +1,15 @@
 require("dotenv").config();
 
-const { adminSave, signIn } = require('./controllers/auth.controller');
+const { signIn } = require('./controllers/auth.controller');
+const { adminSave } = require('./controllers/admin.controller');
 const { orgIndex, newOrg, setOrgPass, getOrg, softDelOrg, restoreOrg, delEmp } = require('./controllers/org.controller');
 const { empIndex, newEmp, setEmpPass, getEmp } = require('./controllers/emp.controller');
 const { newPro, addLink } = require('./controllers/product.controller');
 
+const router = require('express').Router();
 const userAPI = require("./userRoles");
 const {auth} = require("../middleware/auth");
 
-const router = require('express').Router();
 // const authValidation = require("./auth.validator");
 const validationFun = require('../middleware/validation');
 
