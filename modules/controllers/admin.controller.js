@@ -27,14 +27,43 @@ const adminSave = async (req, res) => {
    }
  };
 
+const sendRequest = async (req, res) => {
+  try {
+    const {org_name, social_media, reply_email, reply_phone, niche, region, avg_revenue, referral_method} = req.body;
+    await db.query(
+      "INSERT INTO requests (org_name , social_media, reply_email, reply_phone, niche, region, avg_revenue, referral_method, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())",
+      [org_name,social_media, reply_email, reply_phone, niche, region, avg_revenue, referral_method],
+      (err, result) => {
+        if (err) {
+          console.error(err.message);
+          res.status(500).json({ message: "Error inserting data" });
+        } else {
+          res.json({ message: "Data inserted successfully", result });
+        }
+      }
+    );
+  }
+  catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 const getRequests = async (req, res) => {
    try {
-      db.query(
-         "SELECT * FROM requests"
-      )
+     await db.query(
+         "SELECT * FROM requests",
+         (err, result) => {
+          if (err) {
+            console.error(err.message);
+            res.status(500).json({ message: "Error retrieving data" });
+          } else {
+            res.json({ message: "Data retrieved successfully", result});
+          }
+        }
+      );
    } catch (error) {
-      
+    res.status(400).json({ message: error.message });
    }
 }
 
- module.exports = { adminSave }
+ module.exports = { adminSave , getRequests , sendRequest }

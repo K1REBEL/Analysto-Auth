@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const { signIn } = require('./controllers/auth.controller');
-const { adminSave } = require('./controllers/admin.controller');
+const { adminSave , getRequests , sendRequest} = require('./controllers/admin.controller');
 const { orgIndex, newOrg, setOrgPass, getOrg, softDelOrg, restoreOrg, delEmp } = require('./controllers/org.controller');
 const { empIndex, newEmp, setEmpPass, getEmp } = require('./controllers/emp.controller');
 const { newPro, addLink } = require('./controllers/product.controller');
@@ -37,6 +37,9 @@ router.post("/emp/addEmp", auth(userAPI.addEmp), newEmp);
 router.patch("/emp/setEmpPass", auth(userAPI.setEmpPass), setEmpPass);
 router.post("/pro/addPro", auth(userAPI.addPro), newPro);
 router.post("/pro/addLink/:prod_id", auth(userAPI.addLink), addLink);
+
+router.get("/admin/requests", auth(userAPI.getRequests), getRequests);
+router.post("/requests", sendRequest);
 
 
 module.exports = router;

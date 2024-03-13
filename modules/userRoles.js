@@ -6,6 +6,8 @@ const userAPI = {
    getOrg: [accessroles.admin],
    deleteOrg: [accessroles.admin],
    restoreOrg: [accessroles.admin],
+   getRequests: [accessroles.admin],
+   // sendRequests: [accessroles.admin],
    setOrgPass: [accessroles.admin, accessroles.org],
    adminEmpIndex: [accessroles.admin],
    getEmp:[accessroles.org],
