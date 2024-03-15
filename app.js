@@ -11,7 +11,7 @@ const port = 4000;
 let cors = require("cors");
 // app.use(cors());
 app.use(cors({
-   origin: 'http://127.0.0.1:3000',
+   origin: 'http://localhost:3000', origin: 'http://127.0.0.1:3000'
 }));
 const bodyParser = require('body-parser')
 app.use(bodyParser.text({ type: '/' }));
