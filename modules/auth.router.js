@@ -17,7 +17,7 @@ const validationFun = require('../middleware/validation');
 router.get("/auth/signUp", (req, res)=> res.send("Auth Router!"));
 
 router.post("/saveadmin", adminSave);
-router.get("/auth/signIn", /*validationFun(authValidation.signIn),*/ signIn);
+router.post("/auth/signIn", /*validationFun(authValidation.signIn),*/ signIn);
 
 router.post("/org/addorg", auth(userAPI.addOrg), newOrg);
 router.get("/admin/orgIndex", auth(userAPI.orgIndex), orgIndex);
