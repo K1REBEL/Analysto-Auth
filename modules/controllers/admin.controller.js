@@ -1,4 +1,5 @@
 var jwt = require("jsonwebtoken");
+const fs = require('fs');
 const { getDatabase } = require("../../DB/connect")
 const { searchAdminsTable, searchOrganizationsTable, searchEmployeesTable } = require("../helpers/searchers")
 const bcrypt = require("bcrypt");
@@ -49,8 +50,8 @@ const sendRequest = async (req, res) => {
 };
 
 const getRequests = async (req, res) => {
-   try {
-     await db.query(
+  try {
+    await db.query(
          "SELECT * FROM requests",
          (err, result) => {
           if (err) {
@@ -61,14 +62,14 @@ const getRequests = async (req, res) => {
           }
         }
       );
-   } catch (error) {
+  } catch (error) {
     res.status(400).json({ message: error.message });
-   }
+  }
 }
 
 const rejectRequest = async (req, res) => {
   const {org_name} = req.body;
-    try {
+  try {
     await db.query(
       "UPDATE requests SET status = 'rejected' where org_name =?",
       [org_name],
@@ -86,4 +87,23 @@ const rejectRequest = async (req, res) => {
   }
 }
 
- module.exports = { adminSave , getRequests , sendRequest , rejectRequest}
+const testFetch = async (req, res) => {
+  var input = req.body
+  try {
+
+    const jsonData = JSON.stringify(input, null, 2); // The third argument (2) adds indentation for readability
+
+    // Specify the file path (assuming 'data.json' in the root directory)
+    const filePath = './data.json';
+
+    // Write the JSON data to the file
+    fs.writeFileSync(filePath, jsonData);
+
+    res.json({message: "Done!"})
+  } catch (error) {
+    console.error('Error saving request body:', error);
+    res.status(500).json({ error: 'Internal server error' })
+  }
+}
+
+ module.exports = { adminSave , getRequests , sendRequest , rejectRequest, testFetch }

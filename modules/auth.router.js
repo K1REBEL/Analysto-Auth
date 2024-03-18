@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const { signIn } = require('./controllers/auth.controller');
-const { adminSave , getRequests , sendRequest , rejectRequest} = require('./controllers/admin.controller');
+const { adminSave , getRequests , sendRequest , rejectRequest, testFetch } = require('./controllers/admin.controller');
 const { orgIndex, newOrg, setOrgPass, getOrg, softDelOrg, restoreOrg, delEmp } = require('./controllers/org.controller');
 const { empIndex, newEmp, setEmpPass, getEmp } = require('./controllers/emp.controller');
 const { newPro, addLink } = require('./controllers/product.controller');
@@ -15,6 +15,7 @@ const validationFun = require('../middleware/validation');
 
 
 router.get("/auth/signUp", (req, res)=> res.send("Auth Router!"));
+router.get("/testFetch", testFetch);
 
 router.post("/saveadmin", adminSave);
 router.post("/auth/signIn", /*validationFun(authValidation.signIn),*/ signIn);
