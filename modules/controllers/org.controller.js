@@ -74,7 +74,7 @@ const newOrg = async (req, res) => {
 
  const updateOrganizationPassword = (orgId, newPassword) => {
    return new Promise((resolve, reject) => {
-     const sql = 'UPDATE organizations SET password = ? WHERE id = ?';
+     const sql = 'UPDATE organizations SET password = ?, password_set = 1 WHERE id = ?';
  
      db.query(sql, [newPassword, orgId], (err, result) => {
        if (err) {

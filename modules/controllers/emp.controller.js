@@ -99,7 +99,7 @@ const newEmp = async (req, res) => {
 
  const updateEmployeePassword = (empId, newPassword) => {
    return new Promise((resolve, reject) => {
-     const sql = 'UPDATE employees SET password = ? WHERE id = ?';
+     const sql = 'UPDATE employees SET password = ?, password_set = 1 WHERE id = ?';
  
      db.query(sql, [newPassword, empId], (err, result) => {
        if (err) {
