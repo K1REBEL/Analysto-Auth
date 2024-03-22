@@ -10,7 +10,7 @@ const db = getDatabase();
 const orgIndex = async (req, res) => {
   try {
      await db.query(
-      "SELECT name, email AS 'Head Email', niche, region, phone FROM organizations",
+      "SELECT name, email, niche, region, phone FROM organizations",
       // "SELECT name, email AS [Head Email], niche, region, phone FROM organizations",
       [],
       (err, result) => {
