@@ -8,10 +8,12 @@ const db = getDatabase();
 const newPro = async (req, res) => {
   try {
     const { sku, brand, category } = req.body;
+    const modifiedBrand = brand.substring(0, 2);
+    const modifiedSku = modifiedBrand.toUpperCase() + "-" + sku.toUpperCase();
     
     await db.query(
       "INSERT INTO products (sku, brand, category, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())",
-      [sku, brand, category],
+      [modifiedSku, brand, category],
       async (err, result) => {
         if (err) {
           console.error(err.message);
