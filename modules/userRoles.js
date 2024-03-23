@@ -17,6 +17,7 @@ const userAPI = {
    setEmpPass: [accessroles.org, accessroles.emp],
    addPro: [accessroles.emp],
    addLink: [accessroles.emp],
+   getProducts: [accessroles.emp],
 }
 
 module.exports = userAPI; 

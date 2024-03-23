@@ -4,7 +4,7 @@ const { signIn } = require('./controllers/auth.controller');
 const { adminSave , getRequests , sendRequest , rejectRequest, testFetch } = require('./controllers/admin.controller');
 const { orgIndex, newOrg, setOrgPass, getOrg, softDelOrg, restoreOrg, delEmp } = require('./controllers/org.controller');
 const { empIndex, newEmp, setEmpPass, getEmp } = require('./controllers/emp.controller');
-const { newPro, addLink } = require('./controllers/product.controller');
+const { newPro, addLink , getProducts } = require('./controllers/product.controller');
 
 const router = require('express').Router();
 const userAPI = require("./userRoles");
@@ -38,6 +38,7 @@ router.post("/emp/addEmp", auth(userAPI.addEmp), newEmp);
 router.patch("/emp/setEmpPass", auth(userAPI.setEmpPass), setEmpPass);
 router.post("/pro/addPro", auth(userAPI.addPro), newPro);
 router.post("/pro/addLink/:prod_id", auth(userAPI.addLink), addLink);
+router.get("/products", auth(userAPI.getProducts), getProducts);
 
 router.get("/admin/requests", auth(userAPI.getRequests), getRequests);
 router.post("/requests", sendRequest);
