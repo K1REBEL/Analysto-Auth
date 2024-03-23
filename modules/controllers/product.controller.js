@@ -17,7 +17,7 @@ const newPro = async (req, res) => {
           console.error(err.message);
           res.status(500).json({ message: "Error inserting data" });
         } else {
-          await follow(req.empid, prod_id, result.insertId)
+          await follow(req.empid, result.insertId)
           res.json({ message: "Data inserted successfully", sku, brand, category });
         }
       }
@@ -71,7 +71,7 @@ const follow = (emp_id, prod_id) => {
 const followlink = (prod_id, url_id) => {
   return new Promise((resolve, reject) => {
     db.query(
-      'UPDATE TEACKING SET url_id = ? where prod_id = prod_id',
+      'UPDATE TRACKING SET url_id = ? where prod_id = prod_id',
       [url_id ,prod_id],
       (err, results) => {
         if (err) {
