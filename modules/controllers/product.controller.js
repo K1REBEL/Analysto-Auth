@@ -73,7 +73,7 @@ const follow = (emp_id, prod_id) => {
 const followlink = (prod_id, url_id) => {
   return new Promise((resolve, reject) => {
     db.query(
-      'UPDATE TRACKING SET url_id = ? where prod_id = prod_id',
+      'UPDATE TRACKING SET url_id = ? where prod_id = ?',
       [url_id ,prod_id],
       (err, results) => {
         if (err) {
