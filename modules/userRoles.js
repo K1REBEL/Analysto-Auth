@@ -19,6 +19,7 @@ const userAPI = {
    deletePro: [accessroles.emp],
    addLink: [accessroles.emp],
    getProducts: [accessroles.emp],
+   getUrls: [accessroles.emp],
 }
 
 module.exports = userAPI; 

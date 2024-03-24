@@ -90,7 +90,7 @@ const getProducts = async (req, res) => {
   try{
     const userID = req.empid
     await db.query(
-      "SELECT sku, brand, category FROM products AS pro , tracking AS track WHERE user_id = ?",
+      "SELECT pro.sku, pro.brand, pro.category FROM products AS pro JOIN tracking AS track ON pro.id = track.prod_id WHERE track.user_id = ?",
       [userID],
       (err, result) => {
         if (err) {
@@ -129,4 +129,24 @@ const deletePro = async (req , res) => {
   }
 }
 
-module.exports = { newPro, addLink , getProducts , deletePro}
+const getUrls = async (req , res) => {
+  try {
+    const userID = req.empid
+    await db.query("SELECT lin.url , lin.identifier FROM links AS lin JOIN tracking AS track ON lin.prod_id = track.prod_id where track.user_id = ?",
+    [userID],
+    (err, result) => {
+      if (err) {
+        console.error(err.message);
+        res.status(500).json({ message: "Error retrieving data" });
+      } else {
+        // console.log(result);
+        res.json({ message: "Get links successfully", result });
+      }
+    }
+    )
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}
+
+module.exports = { newPro, addLink , getProducts , deletePro , getUrls}

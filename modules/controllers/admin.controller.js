@@ -69,17 +69,17 @@ const getRequests = async (req, res) => {
 
 const rejectRequest = async (req, res) => {
   const req_id = req.params.req_id
-  const {org_name} = req.body;
+  // const {org_name} = req.body;
   try {
     await db.query(
-      "UPDATE requests SET status = 'rejected' where org_name =?",
-      [org_name],
+      "UPDATE requests SET status = 'rejected' where id = ?",
+      [req_id],
       (err, result) => {
         if (err) {
           console.error(err.message);
           res.status(500).json({ message: "Error reject" });
         } else {
-          res.json({ message: "Request rejected successfully", req_id , org_name});
+          res.json({ message: "Request rejected successfully", req_id});
         }
       }
     );
