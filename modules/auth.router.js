@@ -43,6 +43,6 @@ router.delete("/product/:prod_id", auth(userAPI.deletePro), deletePro);
 
 router.get("/admin/requests", auth(userAPI.getRequests), getRequests);
 router.post("/requests", sendRequest);
-router.patch("/admin/rejReq", auth(userAPI.rejectRequest), rejectRequest);
+router.patch("/admin/rejReq/:req_id", auth(userAPI.rejectRequest), rejectRequest);
 
 module.exports = router;
