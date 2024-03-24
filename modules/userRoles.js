@@ -16,6 +16,7 @@ const userAPI = {
    delEmp: [accessroles.org],
    setEmpPass: [accessroles.org, accessroles.emp],
    addPro: [accessroles.emp],
+   deletePro: [accessroles.emp],
    addLink: [accessroles.emp],
    getProducts: [accessroles.emp],
 }

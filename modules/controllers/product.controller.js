@@ -108,4 +108,25 @@ const getProducts = async (req, res) => {
   }
 }
 
-module.exports = { newPro, addLink , getProducts }
+const deletePro = async (req , res) => {
+  try {
+    const prod_id = req.params.prod_id;
+    await db.query(
+      "DELETE FROM products where id = ?",
+      [prod_id],
+      (err, result) => {
+        if (err) {
+          console.error(err.message);
+          res.status(500).json({ message: "Error retrieving data" });
+        } else {
+          // console.log(result);
+          res.json({ message: "Product Deleted successfully", result });
+        }
+      }
+    )
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}
+
+module.exports = { newPro, addLink , getProducts , deletePro}
