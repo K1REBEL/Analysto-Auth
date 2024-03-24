@@ -120,7 +120,7 @@ const deletePro = async (req , res) => {
           res.status(500).json({ message: "Error retrieving data" });
         } else {
           // console.log(result);
-          res.json({ message: "Product Deleted successfully", result });
+          res.json({ message: "Product Deleted successfully", prod_id });
         }
       }
     )

@@ -78,7 +78,7 @@ const rejectRequest = async (req, res) => {
           console.error(err.message);
           res.status(500).json({ message: "Error reject" });
         } else {
-          res.json({ message: "Request rejected successfully", result});
+          res.json({ message: "Request rejected successfully", org_name});
         }
       }
     );
