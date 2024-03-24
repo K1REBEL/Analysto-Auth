@@ -112,7 +112,7 @@ const deletePro = async (req , res) => {
   try {
     const prod_id = req.params.prod_id;
     await db.query(
-      "DELETE FROM products where id = ?",
+      "DELETE FROM tracking where prod_id = ?",
       [prod_id],
       (err, result) => {
         if (err) {
